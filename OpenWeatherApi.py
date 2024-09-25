@@ -46,13 +46,13 @@ class WeatherAPI:
 
                 # Extract and process the weather data
                 weather_data: dict = {
-                    "temperature": round(full_data["main"]["temp"], 1),  # Rounding temperature to 1 decimal place
-                    "humidity": full_data["main"]["humidity"],
-                    "description": full_data["weather"][0]["description"],  
+                    "temperature": float(round(full_data["main"]["temp"], 1)),  # Rounding temperature to 1 decimal place
+                    "humidity": int(full_data["main"]["humidity"]),
+                    "description": str(full_data["weather"][0]["description"]),  
                     # Note: The [0] is used because 'weather' is a list, and openweatherAPI docs says that
                     # Note: The first item is primary.
                     # Note: This has to be tested in the main application
-                    "wind_speed": full_data["wind"]["speed"]
+                    "wind_speed": float(full_data["wind"]["speed"])
                 }
                 # Note: I thought about adding more attributes
                 # Note: I had several attributes to choose from, "temp_min", "temp_max" "feels_like"
