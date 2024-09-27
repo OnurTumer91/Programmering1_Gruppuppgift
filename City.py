@@ -9,7 +9,7 @@ Todo:
 [X] Implement city_user_input
 [X] Implement validate characters
 [X] Make validation with real life cities using Json or API
-[ ] Fix å,ä,ö et cetera
+[X] Fix å,ä,ö et cetera
 [X] Check why self.city_name is giving underlines
 [X] Check why city_chosen.city_name is giving underlines
 '''
@@ -68,20 +68,20 @@ class City:
             return False
 
 #####################################TEST - DISABLE THIS PART###################################
-if __name__ == "__main__":
+# if __name__ == "__main__":
 
-#Initiate
-    city_chosen = City()
-#Retrieve city input from user
-    city_chosen.city_user_input()
+# #Initiate
+#     city_chosen = City()
+# #Retrieve city input from user
+#     city_chosen.city_user_input()
 
-#1.Validate via regex
-    if city_chosen.validate_city_name(city_chosen.city_name):
-#2.Check if it gives online matches with real cities
-        if city_chosen.city_check_name_api():
-            print(f"'{city_chosen.city_name}' is a valid city according to the OpenWeather API.")
-        else:
-            print(f"'{city_chosen.city_name}' is not found in the OpenWeather API.")
-    else:
-        print(f"'{city_chosen.city_name}' is not in a valid format. No numerals or spaces please")
+# #1.Validate via regex
+#     if city_chosen.validate_city_name(city_chosen.city_name):
+# #2.Check if it gives online matches with real cities
+#         if city_chosen.city_check_name_api():
+#             print(f"'{city_chosen.city_name}' is a valid city according to the OpenWeather API.")
+#         else:
+#             print(f"'{city_chosen.city_name}' is not found in the OpenWeather API. Try Spelling without - between words")
+#     else:
+#         print(f"'{city_chosen.city_name}' is not in a valid format. No numerals or spaces please")
 #####################################::TEST::#################################################
