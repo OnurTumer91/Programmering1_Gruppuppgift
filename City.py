@@ -37,7 +37,9 @@ class City:
 #______________________  :: 2.REGEX CHECK ::_______________________#
 #Validation of the input by comparing letters and spaces by using regex
     def validate_city_name(self, city_name: str) -> bool:
-#Letter and hyphen only, else returns "False"
+# \p{L} Letter from any language including ö,ö,å
+# \p{M} includes tildes and accents such as ' and ´ `
+# Space is allowed between words such as 'New York' or 'New-York'
         if re.match(r"^[\p{L}\p{M}]+(?:[\s'-][\p{L}\p{M}]+)*$", city_name):
             return True
         return False
