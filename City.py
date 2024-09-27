@@ -1,7 +1,7 @@
 #Stad Klassen
 '''
 Aim:
-* Validation: Input city name -> validate -> Check with database(JSON)
+* Validation: Input city name -> validate -> Check with database
 * Error Handling: Manage missing or incorrect inputs
 * Using external data: Json or API to verify real life cities existence
 Todo:
@@ -10,13 +10,12 @@ Todo:
 [X] Implement validate characters
 [X] Make validation with real life cities using Json or API
 [ ] Fix å,ä,ö et cetera
-[ ] Check why self.city_name is giving underlines
-[ ] Check why city_chosen.city_name is giving underlines
+[X] Check why self.city_name is giving underlines
+[X] Check why city_chosen.city_name is giving underlines
 '''
 #Import modules pyinputplus for input validation and re for regex control
 import pyinputplus as pyip
-import re
-import json
+import regex as re
 import requests
 
 #"OpenWeatherMap" API KEY
@@ -33,17 +32,13 @@ class City:
         self.city_name = pyip.inputStr(
             prompt="Enter city name:",
         )
-
-#Weird error, but seems to be working(?)
-##########################################
         return self.city_name
-##########################################
 
 #______________________  :: 2.REGEX CHECK ::_______________________#
 #Validation of the input by comparing letters and spaces by using regex
     def validate_city_name(self, city_name: str) -> bool:
 #Letter and hyphen only, else returns "False"
-        if re.match(r"^[A-Za-z]+(?:[\s-][A-Za-z]+)*$", city_name):
+        if re.match(r"^[\p{L}\p{M}]+(?:[\s'-][\p{L}\p{M}]+)*$", city_name):
             return True
         return False
     
@@ -56,7 +51,7 @@ class City:
         try:
 #Makes a request call
             response = requests.get(api_url)
-#If the request gives back 200, print
+#If the request gives back 200(Success), print
             if response.status_code == 200:
                 # Print for testing purposes
                 # print(f"{self.city_name} is a valid city mathcing our database.")
@@ -70,43 +65,21 @@ class City:
             print(f"Error connecting to OpenWeather API: {failed_connection}")
             return False
 
-#______:: 4.CHECK WITH JSON IF IT MATCHES ANY IRL CITIES ::________#
-    # def city_validate_database(self) -> bool:
-        try:
-#Load in local Json File
-            with open('cities500.json', 'r') as file:
-                city_json_import = json.load(file)
-#For loop to check "names"
-            for city in city_json_import:
-                if self.city_name.lower() == city['name'].lower():
-                    return True
-
-#Return no valid if no match is found
-            print(f"'{self.city_name}' is not a valid city from our database.")
-            return False
-#General error handling
-        except FileNotFoundError:
-            print("The city database file could not be found.")
-            return False
-        except json.JSONDecodeError:
-            print("Error reading the JSON file.")
-            return False
-        
 #####################################TEST - DISABLE THIS PART###################################
-# if __name__ == "__main__":
+if __name__ == "__main__":
 
-# #Initiate
-#     city_chosen = City()
-# #Retrieve city input from user
-#     city_chosen.city_user_input()
+#Initiate
+    city_chosen = City()
+#Retrieve city input from user
+    city_chosen.city_user_input()
 
-# #1.Validate via regex
-#     if city_chosen.validate_city_name(city_chosen.city_name):
-# #2.Check if it gives online matches with real cities
-#         if city_chosen.city_check_name_api():
-#             print(f"'{city_chosen.city_name}' is a valid city according to the OpenWeather API.")
-#         else:
-#             print(f"'{city_chosen.city_name}' is not found in the OpenWeather API.")
-#     else:
-#         print(f"'{city_chosen.city_name}' is not in a valid format. No numerals or spaces please")
+#1.Validate via regex
+    if city_chosen.validate_city_name(city_chosen.city_name):
+#2.Check if it gives online matches with real cities
+        if city_chosen.city_check_name_api():
+            print(f"'{city_chosen.city_name}' is a valid city according to the OpenWeather API.")
+        else:
+            print(f"'{city_chosen.city_name}' is not found in the OpenWeather API.")
+    else:
+        print(f"'{city_chosen.city_name}' is not in a valid format. No numerals or spaces please")
 #####################################::TEST::#################################################
