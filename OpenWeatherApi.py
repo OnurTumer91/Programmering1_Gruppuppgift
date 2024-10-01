@@ -13,7 +13,7 @@ class WeatherAPI:
         # API key for OpenWeatherMap
         self.api_key: str = "d79f1ea93bd9d707f0623a1fe394953b"
         # Base URL for the current weather APID
-        self.base_url: str = "http://api.openweathermap.org/data/2.5/weather"
+        self.weather_url: str = "http://api.openweathermap.org/data/2.5/weather"
         # Base URL for the forecast API
         self.forecast_url: str = "http://api.openweathermap.org/data/2.5/forecast"
 
@@ -28,7 +28,7 @@ class WeatherAPI:
             dict: A dictionary containing weather data, or None if there's an error.
         """
         # Constructing URL
-        url: str = f"{self.base_url}?q={city}&appid={self.api_key}&units=metric"
+        url: str = f"{self.weather_url}?q={city}&appid={self.api_key}&units=metric"
     
         # Error handling: using try-except block
         try:
@@ -51,7 +51,6 @@ class WeatherAPI:
                     "description": str(full_data["weather"][0]["description"]),  
                     # Note: The [0] is used because 'weather' is a list, and openweatherAPI docs says that
                     # Note: The first item is primary.
-                    # Note: This has to be tested in the main application
                     "wind_speed": float(full_data["wind"]["speed"])
                 }
                 # Note: I thought about adding more attributes
@@ -118,7 +117,7 @@ class WeatherAPI:
                         "humidity": int(item['main']['humidity']),
 
                         "description": str(item['weather'][0]['description']),
-                        # Using index 0 as 'weather' is a list containing only one item, see earlier notes
+                        # Using index 0 as 'weather' is a list containing the primary value at index 0
                         "wind_speed": float(item['wind']['speed'])
                     })
                 
