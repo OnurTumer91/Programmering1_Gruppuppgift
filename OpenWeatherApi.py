@@ -2,8 +2,8 @@ import requests
 
 class WeatherAPI:
     """
-    A class to interact with the OpenWeatherMap API.
-    I created this to simplify fetching weather data for different cities.
+    A class to collect data from the OpenWeatherMap API.
+    I I Created this to get weather data from different cities.
     """
 
     def __init__(self):
@@ -19,7 +19,7 @@ class WeatherAPI:
 
     def get_weather(self, city: str) -> dict:
         """
-        Gets weather data from any given city using OpenWeather API.
+        Gets weather data from any given city that exists in OpenWeather API.
     
         Attribute: 
             city (str): The name of the city to get the weather data from.
@@ -72,13 +72,13 @@ class WeatherAPI:
 
     def get_forecast(self, city: str) -> list:
         """
-        Gets a 5-day weather forecast from any given city using OpenWeather API.
+        Gets a 5-day weather forecast from any given city that exists in OpenWeather API.
         
         Attributes:
             city (str): The name of the city to get the 5 day forecast for.
         
         Returns:
-            list: A list of dictionaries containing forecast data for 5 days, or None if there's an error.
+            list: A list of dictionaries containing weather data for 5 days, or None if there's an error.
         """
         # Creating URL
         url: str = f"{self.forecast_url}?q={city}&appid={self.api_key}&units=metric"
