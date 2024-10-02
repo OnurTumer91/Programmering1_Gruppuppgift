@@ -83,5 +83,5 @@ class City:
 #         else:
 #             print(f"'{city_chosen.city_name}' is not found in the OpenWeather API. Try Spelling without - between words")
 #     else:
-#         print(f"'{city_chosen.city_name}' is not in a valid format. No numerals or spaces please")
+#         print(f"'{city_chosen.city_name}' is not in a valid format. No numerals please.")
 #####################################::TEST::#################################################

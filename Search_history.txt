@@ -1,0 +1,1 @@
+stockholm, 2024-10-02 10:46:06, Temperature: 10.8°C, Humidity: 69%, Description: clear sky, Wind Speed: 3.37 m/s
