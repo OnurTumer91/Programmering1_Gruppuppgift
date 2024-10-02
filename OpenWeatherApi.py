@@ -93,8 +93,8 @@ class WeatherAPI:
                 forecast_data: list = []
                 for item in full_data['list'][::8]: 
                     # The OpenWeatherAPI gives us forecast data in 3 hours intervals
-                    # Using basic math 3 * 8 == 24
                     # We decided that this was easier for clarity, since this gives us less data points
+                    # it uses step 8, so it takes first index and hops over the following 7
                     
                     forecast_data.append({
                         "date": str(item['dt_txt'].split()[0]),
