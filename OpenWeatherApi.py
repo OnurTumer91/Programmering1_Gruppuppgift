@@ -89,7 +89,7 @@ class WeatherAPI:
             
             if response.status_code == 200:
                 full_data: dict = response.json()
-                
+                       
                 forecast_data: list = []
                 for item in full_data['list'][::8]: 
                     # The OpenWeatherAPI gives us forecast data in 3 hours intervals
@@ -98,10 +98,8 @@ class WeatherAPI:
                     
                     forecast_data.append({
                         "date": str(item['dt_txt'].split()[0]),
-                        # Note: dt_txt stands for data text, it´s specific to OpenWeatherAPI, not python standard syntax
-                        # found in OpenWeatherAPI docs
-                        # Note: split() is used to extract date. The API returns "2023-09-25 12:00:00",
-                        # and split()[0] takes out the date "2023-09-25"
+                        # Note: split() is used to extract date. The API call returns a date and time, ex "2023-09-25 12:00:00",
+                        # and by using  split()[0] we take out the date "2023-09-25"
 
                         "temperature": float(round(item['main']['temp'], 1)), 
                         # Rounding the temperature to 1 decimal 
