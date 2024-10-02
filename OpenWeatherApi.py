@@ -39,7 +39,7 @@ class WeatherAPI:
             if response.status_code == 200:
                 full_data: dict = response.json()
                 # Note: This converts the response from JSON format into a Python dict
-                # By converting the response data to a Dict we can easly access keys in the main code
+                #By converting the response data to a Dict we can easly access keys in the main code
 
                 # This is the data we decided to extract for our application
                 weather_data: dict = {
@@ -50,9 +50,8 @@ class WeatherAPI:
                     #The first item is primary.
                     "wind_speed": float(full_data["wind"]["speed"])
                 }
-                # Note: We thought about adding more attributes
                 # Note: We had several attributes to choose from, "temp_min", "temp_max" "feels_like"
-                # Note: We decided that 4 attributes is enough since for this assignment
+                # We decided that 4 attributes is enough since for this assignment
                 
                 return weather_data
            
@@ -86,14 +85,12 @@ class WeatherAPI:
             
             if response.status_code == 200:
                 full_data: dict = response.json()
-                # Note: This converts the response data from JSON format into a Python dict
-                # Note: By converting the response data to a Dict we can easily access keys in the main code
                 
                 forecast_data: list = []
                 for item in full_data['list'][::8]: 
                     # The OpenWeatherAPI gives us forecast data in 3 hours intervals
                     # Using basic math 3 * 8 == 24
-                    # We decided that this was easier, since this gives us less data points
+                    # We decided that this was easier for clarity, since this gives us less data points
                     
                     forecast_data.append({
                         "date": str(item['dt_txt'].split()[0]),
@@ -104,11 +101,8 @@ class WeatherAPI:
 
                         "temperature": float(round(item['main']['temp'], 1)), 
                         # Rounding the temperature to 1 decimal 
-
                         "humidity": int(item['main']['humidity']),
-
                         "description": str(item['weather'][0]['description']),
-                        # Using index 0 as 'weather' is a list containing the primary value at index 0
                         "wind_speed": float(item['wind']['speed'])
                     })
                 
