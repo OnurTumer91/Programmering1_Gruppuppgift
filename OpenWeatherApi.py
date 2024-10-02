@@ -84,21 +84,21 @@ class WeatherAPI:
                 full_data: dict = response.json()
                        
                 forecast_data: list = []
-                for item in full_data['list'][::8]: 
+                for day_key in full_data['list'][::8]: 
                     # The OpenWeatherAPI gives us forecast data in 3 hours intervals
                     # We decided that this was easier for clarity, since this gives us less data points
                     # it uses step 8, so it takes first index and hops over the following 7
                     
                     forecast_data.append({
-                        "date": str(item['dt_txt'].split()[0]),
+                        "date": str(day_key['dt_txt'].split()[0]),
                         # Note: split() is used to extract date. The API call returns a date and time, ex "2023-09-25 12:00:00",
                         # and by using  split()[0] we take out the date "2023-09-25"
 
-                        "temperature": float(round(item['main']['temp'], 1)), 
+                        "temperature": float(round(day_key['main']['temp'], 1)), 
                         # Rounding the temperature to 1 decimal 
-                        "humidity": int(item['main']['humidity']),
-                        "description": str(item['weather'][0]['description']),
-                        "wind_speed": float(item['wind']['speed'])
+                        "humidity": int(day_key['main']['humidity']),
+                        "description": str(day_key['weather'][0]['description']),
+                        "wind_speed": float(day_key['wind']['speed'])
                     })
                 
                 return forecast_data[1:]  
