@@ -108,7 +108,7 @@ class WeatherAPI:
                         "wind_speed": float(item['wind']['speed'])
                     })
                 
-                return forecast_data[1:6]  
+                return forecast_data[1:]  
             else:
                 print(f"Error: Unable to get forecast data. Status code: {response.status_code}")
                 return None
