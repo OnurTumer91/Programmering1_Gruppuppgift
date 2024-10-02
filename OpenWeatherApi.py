@@ -56,7 +56,7 @@ class WeatherAPI:
                 return weather_data
            
             else:
-                print(f"Error: Unable to get weather data. Status code: {response.status_code}")
+                print(f"Error: Unable to get the current weather data. Status code: {response.status_code}")
                 return None
 
         # Here we handle both network errors and also unexpected errors.
@@ -106,7 +106,7 @@ class WeatherAPI:
                 
                 return forecast_data[1:]  
             else:
-                print(f"Error: Unable to get forecast data. Status code: {response.status_code}")
+                print(f"Error: Unable to get the forecast data. Status code: {response.status_code}")
                 return None
                 
         
