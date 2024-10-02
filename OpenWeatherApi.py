@@ -3,12 +3,12 @@ import requests
 class WeatherAPI:
     """
     A class to collect data from the OpenWeatherMap API.
-    I I Created this to get weather data from different cities.
+    I Created this to get weather data from different cities.
     """
 
     def __init__(self):
         """
-        Initialize the WeatherAPI class with API key and base URLs.
+        Initialize the WeatherAPI class with API key and the two base URLs.
         """
         # API key for OpenWeatherMap
         self.api_key: str = "d79f1ea93bd9d707f0623a1fe394953b"
@@ -19,14 +19,15 @@ class WeatherAPI:
 
     def get_weather(self, city: str) -> dict:
         """
-        Gets weather data from any given city that exists in OpenWeather API.
+        Getting weather data from a specific city
     
         Attribute: 
             city (str): The name of the city to get the weather data from.
     
         Returns:
-            dict: A dictionary containing weather data, or None if there's an error.
+            dict: A dictionary with temperature, humidity, description, wind speed
         """
+        # Creating the entire API url by adding, city and api key and metric unit 
         url: str = f"{self.weather_url}?q={city}&appid={self.api_key}&units=metric"
     
         try:
@@ -37,30 +38,29 @@ class WeatherAPI:
 
             if response.status_code == 200:
                 full_data: dict = response.json()
-                # Note: This converts the response data from JSON format into a Python dict
-                # Note: By converting the response data to a Dict we can easly access keys in the main code
+                # Note: This converts the response from JSON format into a Python dict
+                # By converting the response data to a Dict we can easly access keys in the main code
 
+                # This is the data we decided to extract for our application
                 weather_data: dict = {
                     "temperature": float(round(full_data["main"]["temp"], 1)),  # Rounding temperature to 1 decimal place
                     "humidity": int(full_data["main"]["humidity"]),
                     "description": str(full_data["weather"][0]["description"]),  
                     # Note: The [0] is used because 'weather' is a list, and openweatherAPI docs says that
-                    # Note: The first item is primary.
+                    #The first item is primary.
                     "wind_speed": float(full_data["wind"]["speed"])
                 }
-                # Note: I thought about adding more attributes
-                # Note: I had several attributes to choose from, "temp_min", "temp_max" "feels_like"
-                # Note: I decided that 4 attributes is enough since for this assignment
-                # Note: If description is prone to crashing, we will change it
+                # Note: We thought about adding more attributes
+                # Note: We had several attributes to choose from, "temp_min", "temp_max" "feels_like"
+                # Note: We decided that 4 attributes is enough since for this assignment
                 
                 return weather_data
+           
             else:
-                print(f"Error: Unable to fetch weather data. Status code: {response.status_code}")
+                print(f"Error: Unable to get weather data. Status code: {response.status_code}")
                 return None
 
-        except:
-            # Handling any unexpected errors
-            print("An error occurred while trying to fetch the weather data.")
+        except: 
             print("Please check your internet connection and try again.")
             return None
 
@@ -69,10 +69,10 @@ class WeatherAPI:
         Gets a 5-day weather forecast from any given city that exists in OpenWeather API.
         
         Attributes:
-            city (str): The name of the city to get the 5 day forecast for.
+            city (str):  Name of the city to get the forecast for.
         
         Returns:
-            list: A list of dictionaries containing weather data for 5 days, or None if there's an error.
+            list: A list of dictionaries containing the forecast data, or None if there's an error.
         """
         
         url: str = f"{self.forecast_url}?q={city}&appid={self.api_key}&units=metric"
@@ -91,16 +91,16 @@ class WeatherAPI:
                 
                 forecast_data: list = []
                 for item in full_data['list'][::8]: 
-                    # Note: Get data for every 24 hours, stepping by 8 
-                    # Note: The OpenWeatherAPI gives forecast data in 3 hours intervals
-                    # Note: Using basic math 3 * 8 == 24 
+                    # The OpenWeatherAPI gives us forecast data in 3 hours intervals
+                    # Using basic math 3 * 8 == 24
+                    # We decided that this was easier, since this gives us less data points
                     
                     forecast_data.append({
                         "date": str(item['dt_txt'].split()[0]),
-                        # Note: dt_txt stands for data text, it is specific to OpenWeatherAPI, not python standard syntax
-                        # Note: Found in OpenWeatherAPI docs
-                        # Note: split() is used to extract date. The API returns a str like "2023-09-25 12:00:00",
-                        # Note: and split()[0] takes out the date "2023-09-25"
+                        # Note: dt_txt stands for data text, it´s specific to OpenWeatherAPI, not python standard syntax
+                        # found in OpenWeatherAPI docs
+                        # Note: split() is used to extract date. The API returns "2023-09-25 12:00:00",
+                        # and split()[0] takes out the date "2023-09-25"
 
                         "temperature": float(round(item['main']['temp'], 1)), 
                         # Rounding the temperature to 1 decimal 
@@ -112,13 +112,13 @@ class WeatherAPI:
                         "wind_speed": float(item['wind']['speed'])
                     })
                 
-                return forecast_data[:5]  
+                return forecast_data[1:6]  
             else:
                 print(f"Error: Unable to fetch forecast data. Status code: {response.status_code}")
                 return None
-
-        except:
-            print("An error occurred while trying to fetch the forecast data.")
+                
+        
+        except: 
             print("Please check your internet connection and try again.")
             return None
         
