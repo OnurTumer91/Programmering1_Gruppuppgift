@@ -19,7 +19,7 @@ class WeatherAPI:
 
     def get_weather(self, city: str) -> dict:
         """
-        Getting weather data from a specific city
+        Getting current weather data from a specific city
     
         Attribute: 
             city (str): The name of the city to get the weather data from.
