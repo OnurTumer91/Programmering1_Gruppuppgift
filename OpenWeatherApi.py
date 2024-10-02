@@ -33,7 +33,7 @@ class WeatherAPI:
         try:
             response: requests.Response = requests.get(url)
         
-            # Note: Debugging print, checking if response from API is 200 
+            # Note: Debugging print, checking if the response from API is 200 
             # print("Response status code:", response.status_code)
 
             if response.status_code == 200:
@@ -59,8 +59,12 @@ class WeatherAPI:
                 print(f"Error: Unable to get weather data. Status code: {response.status_code}")
                 return None
 
-        except: 
+        # Here we handle both network errors and also unexpected errors.
+        except requests.ConnectionError:
             print("Please check your internet connection and try again.")
+            return None 
+        except Exception as e: 
+            print(f"An error occured in form of {e}")
             return None
 
     def get_forecast(self, city: str) -> list:
@@ -108,11 +112,14 @@ class WeatherAPI:
                 
                 return forecast_data[1:6]  
             else:
-                print(f"Error: Unable to fetch forecast data. Status code: {response.status_code}")
+                print(f"Error: Unable to get forecast data. Status code: {response.status_code}")
                 return None
                 
         
-        except: 
+        except requests.ConnectionError:
             print("Please check your internet connection and try again.")
+            return None
+        except Exception as e: 
+            print(f"An error occured in form of {e}")
             return None
         
