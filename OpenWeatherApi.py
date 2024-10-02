@@ -33,9 +33,6 @@ class WeatherAPI:
         try:
             response: requests.Response = requests.get(url)
         
-            # Note: Debugging print, checking if the response from API is 200 
-            # print("Response status code:", response.status_code)
-
             if response.status_code == 200:
                 full_data: dict = response.json()
                 # Note: This converts the response from JSON format into a Python dict
