@@ -39,7 +39,7 @@ class WeatherAPI:
             if response.status_code == 200:
                 full_data: dict = response.json()
                 # Note: This converts the response from JSON format into a Python dict
-                #By converting the response data to a Dict we can easly access keys in the main code
+                #By converting JSON to a Dict we can easly access relevant keys to extract
 
                 # This is the data we decided to extract for our application
                 weather_data: dict = {
@@ -82,10 +82,6 @@ class WeatherAPI:
     
         try:
             response: requests.Response = requests.get(url)
-            
-            # Note: Debugging print
-            # print("Response status code:", response.status_code)
-
             
             if response.status_code == 200:
                 full_data: dict = response.json()
