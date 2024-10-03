@@ -1,18 +1,4 @@
 #Stad Klassen
-'''
-Aim:
-* Validation: Input city name -> validate -> Check with database
-* Error Handling: Manage missing or incorrect inputs
-* Using external data: Json or API to verify real life cities existence
-Todo:
-[X] Structure code
-[X] Implement city_user_input
-[X] Implement validate characters
-[X] Make validation with real life cities using Json or API
-[X] Fix å,ä,ö et cetera
-[X] Check why self.city_name is giving underlines
-[X] Check why city_chosen.city_name is giving underlines
-'''
 #Import modules pyinputplus for input validation and re for regex control
 import pyinputplus as pyip
 import regex as re
@@ -21,7 +7,7 @@ import requests
 #"OpenWeatherMap" API KEY
 API_KEY = "d79f1ea93bd9d707f0623a1fe394953b"
 #---------------------------:: City ::---------------------------#
-#Blueprint for how input city names should be. 'None' will later be loaded into from the input
+#Blueprint for how input city names should be. 'None' will later be stored with a string from the input
 class City:
     def __init__(self) -> None:
         self.city_name = None
@@ -47,7 +33,7 @@ class City:
 #______:: 3.CHECK WITH OPENWEATHER API IF 'CITY' EXISTS ::__________#
     def city_check_name_api(self) -> bool:
 #API Calls from https://openweathermap.org/current#name
-#Fills in user input text and checks online if there is any matches
+#Fills in user input text and checks online if there are any matches
         api_url = f"http://api.openweathermap.org/data/2.5/weather?q={self.city_name}&appid={API_KEY}"
 #Setting up try and except for error handling        
         try:
@@ -66,22 +52,3 @@ class City:
         except requests.exceptions.RequestException as failed_connection:
             print(f"Error connecting to OpenWeather API: {failed_connection}")
             return False
-
-#####################################TEST - DISABLE THIS PART###################################
-# if __name__ == "__main__":
-
-# #Initiate
-#     city_chosen = City()
-# #Retrieve city input from user
-#     city_chosen.city_user_input()
-
-# #1.Validate via regex
-#     if city_chosen.validate_city_name(city_chosen.city_name):
-# #2.Check if it gives online matches with real cities
-#         if city_chosen.city_check_name_api():
-#             print(f"'{city_chosen.city_name}' is a valid city according to the OpenWeather API.")
-#         else:
-#             print(f"'{city_chosen.city_name}' is not found in the OpenWeather API. Try Spelling without - between words")
-#     else:
-#         print(f"'{city_chosen.city_name}' is not in a valid format. No numerals please.")
-#####################################::TEST::#################################################
